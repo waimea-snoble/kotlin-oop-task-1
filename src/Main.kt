@@ -130,7 +130,7 @@ class Gnome(val name: String, var activity: String) {
      *  NAME is ACTIVITY and is ANGER WORD
      */
     fun info(): String {
-        return ""
+        return "$name is $activity and is ${anger()}"
     }
 
     /**
@@ -142,7 +142,14 @@ class Gnome(val name: String, var activity: String) {
      * - 9-10 -> apoplectic
      */
     fun anger(): String {
-        return ""
+        return when(angerLevel) {
+            in 1..2 -> return "calm"
+            in 3..4 -> return "annoyed"
+            in 5..6 -> return "angry"
+            in 7..8 -> return "furious"
+            in 9..10 -> return "apoplectic"
+            else -> return "unkown anger level"
+        }
     }
 
     /**
@@ -152,6 +159,12 @@ class Gnome(val name: String, var activity: String) {
      */
     fun poke(numPokes: Int) {
         println("$name gets poked $numPokes times...")
+
+        angerLevel += numPokes
+
+        if (angerLevel > 10) {
+            angerLevel = 10
+        }
 
 
     }
@@ -166,6 +179,16 @@ class Gnome(val name: String, var activity: String) {
      */
     fun pat(numPats: Int) {
         println("$name gets patted $numPats times...")
+
+        angerLevel -= numPats
+
+        if (angerLevel < 1) {
+            angerLevel = 1
+        }
+
+        if (numPats >= 10) {
+            angerLevel = 10
+        }
 
 
     }
